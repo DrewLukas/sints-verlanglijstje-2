@@ -5,8 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        function showUser(str) {
+            if (str == "") {
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+            } else {
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("txtHint").innerHTML = this.responseText;
+                    }
+                };
+                xmlhttp.open("GET","getpresent.php?q="+str,true);
+                xmlhttp.send();
+            }
+        }
+        </script>
+
 </head>
 <body>
     <h1>Sint's Verlanglijstje</h1>
+
+    <form>
+        <select name="cadeau" onchange="showUser(this.value)">
+          <option value="">Selecteer een cadeau:</option>
+          <option value="1">Speelgoed Auto</option>
+          <option value="2">Barbie</option>
+          <option value="3">Chocolade letter</option>
+          <option value="4">Boek</option>
+          </select>
+        </form>
+        <br>
+        <div id="txtHint"><b>Cadeau's worden hier weergegeven...</b></div>
 </body>
 </html>
